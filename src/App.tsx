@@ -1,26 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { connect } from "react-redux";
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import routes from "./routes";
+import AppBar from "./common/components/AppBar";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IProps {
+  userState?: Record<string, any>;
 }
 
-export default App;
+class App extends React.Component<IProps> {
+  render() {
+    return (
+      <div className="App">
+        <Router>
+          <AppBar />
+          <Switch>
+            {this.props.userState?.isLoggedIn && (
+              <Route exact path={"/login"}>
+                <Redirect to={"/"} />
+              </Route>
+            )}
+            {routes.map(({ requiresLogin, ...route }, index) => {
+              if (requiresLogin && !this.props.userState?.isLoggedIn) {
+                return (
+                  <Route exact {...route} key={index}>
+                    <Redirect
+                      to={{
+                        pathname: "/login",
+                        search: new URLSearchParams({
+                          redirect: route.path,
+                        }).toString(),
+                        state: { referrer: route.path },
+                      }}
+                      exact={true}
+                      strict={true}
+                    />
+                  </Route>
+                );
+              }
+
+              return <Route exact {...route} key={index} />;
+            })}
+            <Redirect to={"/"} />
+          </Switch>
+        </Router>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state: any) => {
+  return { userState: state.userState };
+};
+
+export default connect(mapStateToProps)(App);
