@@ -39,6 +39,7 @@ export default class AppBar extends React.Component<{}, IState> {
           alignItems: "center",
           position: "sticky",
           top: 0,
+          width: "100%",
         }}
       >
         <SideBar

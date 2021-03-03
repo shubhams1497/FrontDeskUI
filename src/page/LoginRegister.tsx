@@ -54,6 +54,15 @@ class Login extends React.Component<Props, {}> {
     });
   };
 
+  autoScrollUtil = (e: any) => {
+    // console.log("on focussed shubham", e.nativeEvent.srcElement);
+    // e?.nativeEvent?.srcElement?.scrollIntoView({
+    //   behavior: "smooth",
+    //   block: "start",
+    //   inline: "nearest",
+    // });
+  };
+
   render() {
     return (
       <div
@@ -61,12 +70,12 @@ class Login extends React.Component<Props, {}> {
           display: "flex",
           alignContent: "center",
           alignItems: "center",
-          flex: 1,
+          // flex: 1,
           flexFlow: "column",
           paddingTop: "10px",
           // backgroundColor: "#f1f1f1",
           // height: "100%",
-          width: "100%",
+          width: "95%",
         }}
       >
         <Typography
@@ -112,6 +121,7 @@ class Login extends React.Component<Props, {}> {
                 variant="outlined"
                 style={{ width: "95%", marginTop: "20px" }}
                 color={"primary"}
+                onFocus={this.autoScrollUtil}
                 // autoFocus
               />
               <TextField
@@ -121,6 +131,7 @@ class Login extends React.Component<Props, {}> {
                 variant="outlined"
                 type={"password"}
                 style={{ width: "95%", marginTop: "20px" }}
+                onFocus={this.autoScrollUtil}
               />
               <div
                 style={{
@@ -164,7 +175,7 @@ class Login extends React.Component<Props, {}> {
                   style={{ fontSize: "12px" }}
                   href="/register"
                 >
-                  {"Don't have an account? Sign Up"}
+                  {"Create new account"}
                 </Button>
               </div>
             </form>
