@@ -60,7 +60,7 @@ class SideBar extends React.Component<
 }
 
 const SideBarContent = (props: any): JSX.Element => {
-  const translateX = props.visible ? 0 : "-200px";
+  const translateX = props.visible ? 0 : "-100%";
 
   return (
     <div
@@ -70,11 +70,12 @@ const SideBarContent = (props: any): JSX.Element => {
         left: 0,
         bottom: 0,
         zIndex: 11,
-        width: "200px",
+        width: "60vw",
+        maxWidth: "300px",
         display: "flex",
         backgroundColor: "rgb(210,210,210)",
         transform: `translateX(${translateX})`,
-        transition: "all ease 0.4s",
+        transition: "all ease 0.5s",
         paddingTop: "20px",
         paddingBottom: "20px",
       }}

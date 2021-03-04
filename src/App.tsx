@@ -20,35 +20,37 @@ class App extends React.Component<IProps> {
       <div className="App">
         <Router>
           <AppBar />
-          <Switch>
-            {this.props.userState?.isLoggedIn && (
-              <Route exact path={"/login"}>
-                <Redirect to={"/"} />
-              </Route>
-            )}
-            {routes.map(({ requiresLogin, ...route }, index) => {
-              if (requiresLogin && !this.props.userState?.isLoggedIn) {
-                return (
-                  <Route exact {...route} key={index}>
-                    <Redirect
-                      to={{
-                        pathname: "/login",
-                        search: new URLSearchParams({
-                          redirect: route.path,
-                        }).toString(),
-                        state: { referrer: route.path },
-                      }}
-                      exact={true}
-                      strict={true}
-                    />
-                  </Route>
-                );
-              }
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              {this.props.userState?.isLoggedIn && (
+                <Route exact path={"/login"}>
+                  <Redirect to={"/"} />
+                </Route>
+              )}
+              {routes.map(({ requiresLogin, ...route }, index) => {
+                if (requiresLogin && !this.props.userState?.isLoggedIn) {
+                  return (
+                    <Route exact {...route} key={index}>
+                      <Redirect
+                        to={{
+                          pathname: "/login",
+                          search: new URLSearchParams({
+                            redirect: route.path,
+                          }).toString(),
+                          state: { referrer: route.path },
+                        }}
+                        exact={true}
+                        strict={true}
+                      />
+                    </Route>
+                  );
+                }
 
-              return <Route exact {...route} key={index} />;
-            })}
-            <Redirect to={"/"} />
-          </Switch>
+                return <Route exact {...route} key={index} />;
+              })}
+              <Redirect to={"/"} />
+            </Switch>
+          </React.Suspense>
         </Router>
       </div>
     );

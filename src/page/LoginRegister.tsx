@@ -10,6 +10,8 @@ import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import { withRouter, RouteComponentProps } from "react-router";
+import { Link } from "react-router-dom";
+
 //importing user state update action
 import { updateUserStateAction } from "../reducers/userState";
 
@@ -42,6 +44,7 @@ class Login extends React.Component<Props, {}> {
   }
 
   handleSubmit = (event: any) => {
+    console.log("shubham form submitted");
     // makeApi call here
     event.preventDefault();
   };
@@ -103,6 +106,7 @@ class Login extends React.Component<Props, {}> {
                   User Type
                 </InputLabel>
                 <Select
+                  autoFocus
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   value={"Instructor"}
@@ -162,21 +166,24 @@ class Login extends React.Component<Props, {}> {
                   marginTop: "15px",
                 }}
               >
-                <Button
-                  variant="text"
-                  color="primary"
-                  style={{ fontSize: "12px" }}
-                >
-                  {"Forgot password?"}
-                </Button>
-                <Button
-                  variant="text"
-                  color="primary"
-                  style={{ fontSize: "12px" }}
-                  href="/register"
-                >
-                  {"Create new account"}
-                </Button>
+                <Link to="/forgot">
+                  <Typography
+                    align={"left"}
+                    variant={"subtitle1"}
+                    color={"primary"}
+                  >
+                    {"Forgot credentials?"}
+                  </Typography>
+                </Link>
+                <Link to="/register">
+                  <Typography
+                    align={"right"}
+                    variant={"subtitle1"}
+                    color={"primary"}
+                  >
+                    {"Register for new account"}
+                  </Typography>
+                </Link>
               </div>
             </form>
           </Grid>

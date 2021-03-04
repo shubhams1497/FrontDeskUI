@@ -1,13 +1,19 @@
-import Login from "./page/LoginRegister";
+import React, { Suspense } from "react";
 
 const routes = [
   {
     path: "/login",
-    render: (routeProps) => <Login isLogin {...routeProps} />,
+    render: (routeProps) => {
+      const LoginComponent = React.lazy(() => import("./page/LoginRegister"));
+      return <LoginComponent isLogin {...routeProps} />;
+    },
   },
   {
     path: "/register",
-    render: () => <div>{"Register Page"}</div>,
+    render: (routeProps) => {
+      const RegisterComponent = React.lazy(() => import("./page/RegisterPage"));
+      return <RegisterComponent {...routeProps} />;
+    },
   },
   {
     path: "/about",
